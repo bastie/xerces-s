@@ -15,26 +15,20 @@
  * limitations under the License.
  */
 
-package org.apache.xerces.xni;
-
-/**
- * This handler interface contains methods necessary to receive
- * information about document elements and content.
- * <p>
- * <strong>Note:</strong> Some of these methods overlap methods
- * found in the XMLDocumentHandler interface.
- *
- * @see XMLDocumentHandler
- *
- * @author Andy Clark, IBM
- * @version $Id$
- */
-public interface XMLDocumentFragmentHandler {
-
-    //
-    // XMLDocumentFragmentHandler methods
-    //
-
+extension org.apache.xerces.xni {
+  
+  ///
+  /// This handler interface contains methods necessary to receive
+  /// information about document elements and content.
+  ///
+  /// - Note: Some of these methods overlap methods
+  /// found in the XMLDocumentHandler interface.
+  ///
+  /// - SeeAlso: XMLDocumentHandler
+  ///
+  /// - Authors: Andy Clark, IBM
+  public protocol XMLDocumentFragmentHandler {
+    
     /**
      * The start of the document fragment.
      *
@@ -57,17 +51,14 @@ public interface XMLDocumentFragmentHandler {
      *
      * @throws XNIException Thrown by handler to signal an error.
      */
-    public void startDocumentFragment(XMLLocator locator,
-                                      NamespaceContext namespaceContext,
-                                      Augmentations augmentations) 
-        throws XNIException;
-
+    func startDocumentFragment(_ locator : XMLLocator,_ namespaceContext : NamespaceContext, _ augmentations : Augmentations) throws (XNIException)
+    
     /**
      * This method notifies the start of a general entity.
      * <p>
      * <strong>Note:</strong> This method is not called for entity references
      * appearing as part of attribute values.
-     * 
+     *
      * @param name     The name of the general entity.
      * @param identifier The resource identifier.
      * @param encoding The auto-detected IANA encoding name of the entity
@@ -80,11 +71,8 @@ public interface XMLDocumentFragmentHandler {
      *
      * @throws XNIException Thrown by handler to signal an error.
      */
-    public void startGeneralEntity(String name, 
-                                   XMLResourceIdentifier identifier,
-                                   String encoding,
-                                   Augmentations augmentations) throws XNIException;
-
+    func startGeneralEntity(_ name : String, _ identifier : XMLResourceIdentifier, _ encoding : String, _ augmentations : Augmentations) throws (XNIException)
+    
     /**
      * Notifies of the presence of a TextDecl line in an entity. If present,
      * this method will be called immediately following the startEntity call.
@@ -95,7 +83,7 @@ public interface XMLDocumentFragmentHandler {
      * <p>
      * <strong>Note:</strong> This method is not called for entity references
      * appearing as part of attribute values.
-     * 
+     *
      * @param version  The XML version, or null if not specified.
      * @param encoding The IANA encoding name of the entity.
      * @param augmentations Additional information that may include infoset
@@ -103,36 +91,33 @@ public interface XMLDocumentFragmentHandler {
      *
      * @throws XNIException Thrown by handler to signal an error.
      */
-    public void textDecl(String version, String encoding,
-                         Augmentations augmentations) throws XNIException;
-
+    func textDecl(_ version : String, _ encoding : String, _ augmentations : Augmentations) throws (XNIException)
+    
     /**
      * This method notifies the end of a general entity.
      * <p>
      * <strong>Note:</strong> This method is not called for entity references
      * appearing as part of attribute values.
-     * 
+     *
      * @param name The name of the general entity.
      * @param augmentations Additional information that may include infoset
      *                      augmentations.
      *
      * @throws XNIException Thrown by handler to signal an error.
      */
-    public void endGeneralEntity(String name, Augmentations augmentations) 
-        throws XNIException;
-
+    func endGeneralEntity(_ name : String, _ augmentations : Augmentations) throws (XNIException)
+    
     /**
      * A comment.
-     * 
+     *
      * @param text The text in the comment.
      * @param augmentations Additional information that may include infoset
      *                      augmentations.
      *
      * @throws XNIException Thrown by application to signal an error.
      */
-    public void comment(XMLString text, Augmentations augmentations) 
-        throws XNIException;
-
+    func comment(_ text : XMLString, _ augmentations : Augmentations) throws (XNIException)
+    
     /**
      * A processing instruction. Processing instructions consist of a
      * target name and, optionally, text data. The data is only meaningful
@@ -143,7 +128,7 @@ public interface XMLDocumentFragmentHandler {
      * element attributes but are <strong>not</strong> parsed or presented
      * to the application as anything other than text. The application is
      * responsible for parsing the data.
-     * 
+     *
      * @param target The target.
      * @param data   The data or null if none specified.
      * @param augmentations Additional information that may include infoset
@@ -151,13 +136,11 @@ public interface XMLDocumentFragmentHandler {
      *
      * @throws XNIException Thrown by handler to signal an error.
      */
-    public void processingInstruction(String target, XMLString data,
-                                      Augmentations augmentations)
-        throws XNIException;
-
+    func processingInstruction(_ target : String, _ data : XMLString, _ augmentations : Augmentations) throws (XNIException)
+    
     /**
      * The start of an element.
-     * 
+     *
      * @param element    The name of the element.
      * @param attributes The element attributes.
      * @param augmentations Additional information that may include infoset
@@ -165,12 +148,11 @@ public interface XMLDocumentFragmentHandler {
      *
      * @throws XNIException Thrown by handler to signal an error.
      */
-    public void startElement(QName element, XMLAttributes attributes,
-                             Augmentations augmentations) throws XNIException;
-
+    func startElement(_ element : QName, _ attributes : XMLAttributes, _ augmentations : Augmentations) throws (XNIException)
+    
     /**
      * An empty element.
-     * 
+     *
      * @param element    The name of the element.
      * @param attributes The element attributes.
      * @param augmentations Additional information that may include infoset
@@ -178,21 +160,19 @@ public interface XMLDocumentFragmentHandler {
      *
      * @throws XNIException Thrown by handler to signal an error.
      */
-    public void emptyElement(QName element, XMLAttributes attributes,
-                             Augmentations augmentations) throws XNIException;
-
+    func emptyElement(_ element : QName, _ attributes : XMLAttributes, _ augmentations : Augmentations) throws (XNIException)
+    
     /**
      * Character content.
-     * 
+     *
      * @param text The content.
      * @param augmentations Additional information that may include infoset
      *                      augmentations.
      *
      * @throws XNIException Thrown by handler to signal an error.
      */
-    public void characters(XMLString text, Augmentations augmentations) 
-        throws XNIException;
-
+    func characters(_ text : XMLString, _ augmentations : Augmentations) throws (XNIException)
+    
     /**
      * Ignorable whitespace. For this method to be called, the document
      * source must have some way of determining that the text containing
@@ -200,49 +180,46 @@ public interface XMLDocumentFragmentHandler {
      * example, the validator can determine if a length of whitespace
      * characters in the document are ignorable based on the element
      * content model.
-     * 
+     *
      * @param text The ignorable whitespace.
      * @param augmentations Additional information that may include infoset
      *                      augmentations.
      *
      * @throws XNIException Thrown by handler to signal an error.
      */
-    public void ignorableWhitespace(XMLString text,
-                                    Augmentations augmentations) 
-        throws XNIException;
-
+    func ignorableWhitespace(_ text : XMLString, _ augmentations : Augmentations) throws (XNIException)
+    
     /**
      * The end of an element.
-     * 
+     *
      * @param element The name of the element.
      * @param augmentations Additional information that may include infoset
      *                      augmentations.
      *
      * @throws XNIException Thrown by handler to signal an error.
      */
-    public void endElement(QName element, Augmentations augmentations) 
-        throws XNIException;
-
-    /** 
-     * The start of a CDATA section. 
-     *
-     * @param augmentations Additional information that may include infoset
-     *                      augmentations.
-     *
-     * @throws XNIException Thrown by handler to signal an error.
-     */
-    public void startCDATA(Augmentations augmentations) throws XNIException;
-
+    func endElement(_ element : QName, _ augmentations : Augmentations) throws (XNIException)
+    
     /**
-     * The end of a CDATA section. 
+     * The start of a CDATA section.
      *
      * @param augmentations Additional information that may include infoset
      *                      augmentations.
      *
      * @throws XNIException Thrown by handler to signal an error.
      */
-    public void endCDATA(Augmentations augmentations) throws XNIException;
-
+    func startCDATA(_ augmentations : Augmentations) throws (XNIException)
+    
+    /**
+     * The end of a CDATA section.
+     *
+     * @param augmentations Additional information that may include infoset
+     *                      augmentations.
+     *
+     * @throws XNIException Thrown by handler to signal an error.
+     */
+    func endCDATA(_ augmentations : Augmentations) throws (XNIException)
+    
     /**
      * The end of the document fragment.
      *
@@ -251,7 +228,7 @@ public interface XMLDocumentFragmentHandler {
      *
      * @throws XNIException Thrown by handler to signal an error.
      */
-    public void endDocumentFragment(Augmentations augmentations) 
-        throws XNIException;
-
-} // interface XMLDocumentFragmentHandler
+    func endDocumentFragment(_ augmentations : Augmentations) throws (XNIException)
+    
+  }
+}

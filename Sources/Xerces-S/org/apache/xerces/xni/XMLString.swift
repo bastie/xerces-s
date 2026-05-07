@@ -15,67 +15,64 @@
  * limitations under the License.
  */
 
-package org.apache.xerces.xni;
+import JavApi
 
-/**
- * This class is used as a structure to pass text contained in the underlying
- * character buffer of the scanner. The offset and length fields allow the
- * buffer to be re-used without creating new character arrays.
- * <p>
- * <strong>Note:</strong> Methods that are passed an XMLString structure
- * should consider the contents read-only and not make any modifications
- * to the contents of the buffer. The method receiving this structure
- * should also not modify the offset and length if this structure (or
- * the values of this structure) are passed to another method.
- * <p>
- * <strong>Note:</strong> Methods that are passed an XMLString structure
- * are required to copy the information out of the buffer if it is to be
- * saved for use beyond the scope of the method. The contents of the 
- * structure are volatile and the contents of the character buffer cannot
- * be assured once the method that is passed this structure returns.
- * Therefore, methods passed this structure should not save any reference
- * to the structure or the character array contained in the structure.
- *
- * @author Eric Ye, IBM
- * @author Andy Clark, IBM
- *
- * @version $Id$
- */
-public class XMLString {
-
-    //
-    // Data
-    //
-
+extension org.apache.xerces.xni {
+  
+  /**
+   * This class is used as a structure to pass text contained in the underlying
+   * character buffer of the scanner. The offset and length fields allow the
+   * buffer to be re-used without creating new character arrays.
+   * <p>
+   * <strong>Note:</strong> Methods that are passed an XMLString structure
+   * should consider the contents read-only and not make any modifications
+   * to the contents of the buffer. The method receiving this structure
+   * should also not modify the offset and length if this structure (or
+   * the values of this structure) are passed to another method.
+   * <p>
+   * <strong>Note:</strong> Methods that are passed an XMLString structure
+   * are required to copy the information out of the buffer if it is to be
+   * saved for use beyond the scope of the method. The contents of the
+   * structure are volatile and the contents of the character buffer cannot
+   * be assured once the method that is passed this structure returns.
+   * Therefore, methods passed this structure should not save any reference
+   * to the structure or the character array contained in the structure.
+   *
+   * @author Eric Ye, IBM
+   * @author Andy Clark, IBM
+   *
+   */
+  public class XMLString {
+    
     /** The character array. */
-    public char[] ch;
-
+    public var ch : [Character]? = nil
+    
     /** The offset into the character array. */
-    public int offset;
-
+    public var offset : Int = 0
+    
     /** The length of characters from the offset. */
-    public int length;
-
+    public var length : Int = 0
+    
     //
     // Constructors
     //
-
+    
     /** Default constructor. */
-    public XMLString() {
+    public init() {
     } // <init>()
-
+    
     /**
      * Constructs an XMLString structure preset with the specified
      * values.
-     * 
+     *
      * @param ch     The character array.
      * @param offset The offset into the character array.
      * @param length The length of characters from the offset.
      */
-    public XMLString(char[] ch, int offset, int length) {
-        setValues(ch, offset, length);
+    public init (_ ch : [Character], _ offset : Int, _ length : Int) {
+      setValues(ch, offset, length);
     } // <init>(char[],int,int)
-
+    
     /**
      * Constructs an XMLString structure with copies of the values in
      * the given structure.
@@ -85,28 +82,28 @@ public class XMLString {
      *
      * @param string The XMLString to copy.
      */
-    public XMLString(XMLString string) {
-        setValues(string);
+    public init (_ string : XMLString) {
+      setValues(string);
     } // <init>(XMLString)
-
+    
     //
     // Public methods
     //
-
+    
     /**
      * Initializes the contents of the XMLString structure with the
      * specified values.
-     * 
+     *
      * @param ch     The character array.
      * @param offset The offset into the character array.
      * @param length The length of characters from the offset.
      */
-    public void setValues(char[] ch, int offset, int length) {
-        this.ch = ch;
-        this.offset = offset;
-        this.length = length;
+    public func setValues(_ ch : [Character]?, _ offset : Int, _ length : Int) {
+      self.ch = ch;
+      self.offset = offset;
+      self.length = length;
     } // setValues(char[],int,int)
-
+    
     /**
      * Initializes the contents of the XMLString structure with copies
      * of the given string structure.
@@ -116,43 +113,51 @@ public class XMLString {
      *
      * @param s an XML string structure to copy
      */
-    public void setValues(XMLString s) {
-        setValues(s.ch, s.offset, s.length);
+    public func setValues(_ s : XMLString) {
+      setValues(s.ch, s.offset, s.length);
     } // setValues(XMLString)
-
+    
     /**
      * Resets all the values to their defaults.
      */
-    public void clear() {
-        this.ch = null;
-        this.offset = 0;
-        this.length = -1;
+    public func clear() {
+      self.ch = nil;
+      self.offset = 0;
+      self.length = -1;
     } // clear()
-
+    
     /**
      * Returns true if the contents of this XMLString structure and
      * the specified array are equal.
-     * 
+     *
      * @param ch     The character array.
      * @param offset The offset into the character array.
      * @param length The length of characters from the offset.
      */
-    public boolean equals(char[] ch, int offset, int length) {
-        if (ch == null) {
-            return false;
+    public func equals(_ ch : [Character]?, _ offset : Int, _ length : Int) -> Bool{
+      if let ch {
+        if (self.length != length) {
+          return false;
         }
-        if (this.length != length) {
-            return false;
-        }
-
-        for (int i=0; i<length; i++) {
-            if (this.ch[this.offset+i] != ch[offset+i] ) {
-                return false;
+        
+        if let self_ch = self.ch {
+          for i in 0..<length {
+            if (self_ch [self.offset+i] != ch[offset+i] ) {
+              return false;
             }
+          }
+          return true;
         }
-        return true;
+        else {
+          return false
+        }
+      }
+      else {
+      // if (ch == nil) { // FIXME: IMHO not correct if both XMLStrings are nil
+        return false;
+      }
     } // equals(char[],int,int):boolean
-
+    
     /**
      * Returns true if the contents of this XMLString structure and
      * the specified string are equal.
@@ -160,38 +165,39 @@ public class XMLString {
      * @param s the Java string to compare
      * @return true if the contents of this XMLString match the string
      */
-    public boolean equals(String s) {
-        if (s == null) {
-            return false;
+    public func equals(_ s : String?) -> Bool {
+      if (s == nil) {
+        return false;
+      }
+      if ( length != s.length() ) {
+        return false;
+      }
+      
+      // is this faster than call s.toCharArray first and compare the
+      // two arrays directly, which will possibly involve creating a
+      // new char array object.
+      for i in 0..<length {
+        if (ch![offset+i] != s!.charAt(i)) {
+          return false;
         }
-        if ( length != s.length() ) {
-            return false;
-        }
-
-        // is this faster than call s.toCharArray first and compare the 
-        // two arrays directly, which will possibly involve creating a
-        // new char array object.
-        for (int i=0; i<length; i++) {
-            if (ch[offset+i] != s.charAt(i)) {
-                return false;
-            }
-        }
-
-        return true;
+      }
+      
+      return true;
     } // equals(String):boolean
-
+    
     //
     // Object methods
     //
-
+    
     /**
      * Returns a string representation of this object.
      * <p>A new String will be returned based on the chars available from the current offset up to the current length.</p>
      *
      * @return the text contained from the current offset up to the current length
      */
-    public String toString() {
-        return length > 0 ? new String(ch, offset, length) : "";
+    public func toString() -> String {
+      return length > 0 ? String(ch!, offset, length) : "";
     } // toString():String
-
-} // class XMLString
+    
+  } // class XMLString
+}

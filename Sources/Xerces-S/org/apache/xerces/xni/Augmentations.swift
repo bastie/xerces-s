@@ -15,74 +15,76 @@
  * limitations under the License.
  */
 
-package org.apache.xerces.xni;
+import JavApi
 
-import java.util.Enumeration;
-
-/**
- * The Augmentations interface defines a table of additional data that may
- * be passed along the document pipeline. The information can contain extra
- * arguments or infoset augmentations, for example PSVI. This additional
- * information is identified by a String key.
- * <p>
- * <strong>Note:</strong>
- * Methods that receive Augmentations are required to copy the information
- * if it is to be saved for use beyond the scope of the method.
- * The Augmentations content is volatile, and maybe modified by any method in
- * any component in the pipeline. Therefore, methods passed this structure
- * should not save any reference to the structure.
- * 
- * @author Elena Litani, IBM
- * @version $Id$
- */
-
-public interface Augmentations {
+extension org.apache.xerces.xni {
+  
+  
+  /**
+   * The Augmentations interface defines a table of additional data that may
+   * be passed along the document pipeline. The information can contain extra
+   * arguments or infoset augmentations, for example PSVI. This additional
+   * information is identified by a String key.
+   * <p>
+   * <strong>Note:</strong>
+   * Methods that receive Augmentations are required to copy the information
+   * if it is to be saved for use beyond the scope of the method.
+   * The Augmentations content is volatile, and maybe modified by any method in
+   * any component in the pipeline. Therefore, methods passed this structure
+   * should not save any reference to the structure.
+   *
+   * @author Elena Litani, IBM
+   * @version $Id$
+   */
+  
+  public protocol Augmentations {
     
     
     /**
      * Add additional information identified by a key to the Augmentations structure.
-     * 
+     *
      * @param key    Identifier, can't be <code>null</code>
      * @param item   Additional information
      *
      * @return the previous value of the specified key in the Augmentations structure,
      *         or <code>null</code> if it did not have one.
      */
-    public Object putItem (String key, Object item);
-
-
+    func putItem (_ key : String, _ item : AnyObject?) -> AnyObject?
+    
+    
     /**
      * Get information identified by a key from the Augmentations structure
-     * 
+     *
      * @param key    Identifier, can't be <code>null</code>
      *
      * @return the value to which the key is mapped in the Augmentations structure;
      *         <code>null</code> if the key is not mapped to any value.
      */
-    public Object getItem(String key);
+    func getItem(_ key : String) -> AnyObject?
     
     
     /**
      * Remove additional info from the Augmentations structure
-     * 
+     *
      * @param key    Identifier, can't be <code>null</code>
      * @return the previous value of the specified key in the Augmentations structure,
      *         or <code>null</code> if it did not have one.
      */
-    public Object removeItem (String key);
-
+    func removeItem (_ key : String) -> AnyObject?
+    
     
     /**
      * Returns an enumeration of the keys in the Augmentations structure.
      *
      * @return an {@link Enumeration} of the keys in the Augmentations structure
      */
-    public Enumeration keys ();
-
-
+    func keys() -> any java.util.Enumeration
+    
+    
     /**
      * Remove all objects from the Augmentations structure.
      */
-    public void removeAllItems ();
-
+    func removeAllItems ()
+    
+  }
 }

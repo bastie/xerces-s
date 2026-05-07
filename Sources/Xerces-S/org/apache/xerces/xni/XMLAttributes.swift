@@ -15,30 +15,26 @@
  * limitations under the License.
  */
 
-package org.apache.xerces.xni;
-
-/**
- * The XMLAttributes interface defines a collection of attributes for 
- * an element. In the parser, the document source would scan the entire
- * start element and collect the attributes. The attributes are 
- * communicated to the document handler in the startElement method.
- * <p>
- * The attributes are read-write so that subsequent stages in the document
- * pipeline can modify the values or change the attributes that are
- * propagated to the next stage.
- *
- * @see XMLDocumentHandler#startElement
- *
- * @author Andy Clark, IBM
- *
- * @version $Id$
- */
-public interface XMLAttributes {
-
-    //
-    // XMLAttributes methods
-    //
-
+extension org.apache.xerces.xni {
+  
+  /**
+   * The XMLAttributes interface defines a collection of attributes for
+   * an element. In the parser, the document source would scan the entire
+   * start element and collect the attributes. The attributes are
+   * communicated to the document handler in the startElement method.
+   * <p>
+   * The attributes are read-write so that subsequent stages in the document
+   * pipeline can modify the values or change the attributes that are
+   * propagated to the next stage.
+   *
+   * @see XMLDocumentHandler#startElement
+   *
+   * @author Andy Clark, IBM
+   *
+   */
+  public protocol XMLAttributes {
+    
+    
     /**
      * Adds an attribute. The attribute's non-normalized value of the
      * attribute will have the same value as the attribute value until
@@ -50,41 +46,41 @@ public interface XMLAttributes {
      * <strong>Note:</strong> If an attribute of the same name already
      * exists, the old values for the attribute are replaced by the new
      * values.
-     * 
+     *
      * @param attrName  The attribute name.
      * @param attrType  The attribute type. The type name is determined by
      *                  the type specified for this attribute in the DTD.
      *                  For example: "CDATA", "ID", "NMTOKEN", etc. However,
      *                  attributes of type enumeration will have the type
      *                  value specified as the pipe ('|') separated list of
-     *                  the enumeration values prefixed by an open 
+     *                  the enumeration values prefixed by an open
      *                  parenthesis and suffixed by a close parenthesis.
      *                  For example: "(true|false)".
      * @param attrValue The attribute value.
-     * 
+     *
      * @return Returns the attribute index.
      *
      * @see #setNonNormalizedValue
      * @see #setSpecified
      */
-    public int addAttribute(QName attrName, String attrType, String attrValue);
-
-    /** 
+    func addAttribute(_ attrName : QName, _ attrType : String, _ attrValue : String) -> Int
+    
+    /**
      * Removes all of the attributes. This method will also remove all
      * entities associated to the attributes.
      */
-    public void removeAllAttributes();
-
+    func removeAllAttributes()
+    
     /**
      * Removes the attribute at the specified index.
      * <p>
      * <strong>Note:</strong> This operation changes the indexes of all
      * attributes following the attribute at the specified index.
-     * 
+     *
      * @param attrIndex The attribute index.
      */
-    public void removeAttributeAt(int attrIndex);
-
+    func removeAttributeAt(_ attrIndex : Int)
+    
     /**
      * Returns the number of attributes in the list.
      * <p>
@@ -100,8 +96,8 @@ public interface XMLAttributes {
      * @see #getType(int)
      * @see #getValue(int)
      */
-    public int getLength();
-
+    func getLength() -> Int
+    
     /**
      * Look up the index of an attribute by XML 1.0 qualified name.
      *
@@ -110,8 +106,8 @@ public interface XMLAttributes {
      * @return the index of the attribute, or -1 if it does not
      *         appear in the list
      */
-    public int getIndex(String qName);
-
+    func getIndex(_ qName : String) -> Int
+    
     /**
      * Look up the index of an attribute by Namespace name.
      *
@@ -122,33 +118,34 @@ public interface XMLAttributes {
      * @return The index of the attribute, or -1 if it does not
      *         appear in the list.
      */
-    public int getIndex(String uri, String localPart);
-
+    func getIndex(_ uri : String, _ localPart : String) -> Int
+    
     /**
      * Sets the name of the attribute at the specified index.
-     * 
+     *
      * @param attrIndex The attribute index.
      * @param attrName  The new attribute name.
      */
-    public void setName(int attrIndex, QName attrName);
-
+    func setName(_ attrIndex : Int, _ attrName : QName)
+    
     /**
      * Sets the fields in the given QName structure with the values
      * of the attribute name at the specified index.
-     * 
+     *
      * @param attrIndex The attribute index.
      * @param attrName  The attribute name structure to fill in.
      */
-    public void getName(int attrIndex, QName attrName);
-
+    // - FIXME: a setter with get prefix is IMHO not correct
+    func getName(_ attrIndex : Int, _ attrName : QName)
+    
     /**
      * Returns the prefix of the attribute at the specified index.
      *
      * @param index the index of the attribute
      * @return the prefix of the attribute at the specified index
      */
-    public String getPrefix(int index);
-
+    func getPrefix(_ index : Int) -> String
+    
     /**
      * Look up an attribute's Namespace URI by index.
      *
@@ -160,7 +157,7 @@ public interface XMLAttributes {
      *
      * @see #getLength
      */
-    public String getURI(int index);
+    func getURI(_ index : Int) -> String
     
     /**
      * Look up an attribute's local name by index.
@@ -173,8 +170,8 @@ public interface XMLAttributes {
      *
      * @see #getLength
      */
-    public String getLocalName(int index);
-
+    func getLocalName(_ index : Int) -> String
+    
     /**
      * Look up an attribute's XML 1.0 qualified name by index.
      *
@@ -186,23 +183,23 @@ public interface XMLAttributes {
      *
      * @see #getLength
      */
-    public String getQName(int index);
-
+    func getQName(_ index : Int) -> String
+    
     /**
      * Sets the type of the attribute at the specified index.
-     * 
+     *
      * @param attrIndex The attribute index.
      * @param attrType  The attribute type. The type name is determined by
      *                  the type specified for this attribute in the DTD.
      *                  For example: "CDATA", "ID", "NMTOKEN", etc. However,
      *                  attributes of type enumeration will have the type
      *                  value specified as the pipe ('|') separated list of
-     *                  the enumeration values prefixed by an open 
+     *                  the enumeration values prefixed by an open
      *                  parenthesis and suffixed by a close parenthesis.
      *                  For example: "(true|false)".
      */
-    public void setType(int attrIndex, String attrType);
-
+    func setType(_ attrIndex : Int, _ attrType : String);
+    
     /**
      * Look up an attribute's type by index.
      * <p>
@@ -225,8 +222,8 @@ public interface XMLAttributes {
      *
      * @see #getLength
      */
-    public String getType(int index);
-
+    func getType(_ index : Int) -> String
+    
     /**
      * Look up an attribute's type by XML 1.0 qualified name.
      * <p>
@@ -239,8 +236,8 @@ public interface XMLAttributes {
      *         attribute is not in the list or if qualified names
      *         are not available
      */
-    public String getType(String qName);
-
+    func getType(_ qName : String) -> String
+    
     /**
      * Look up an attribute's type by Namespace name.
      * <p>
@@ -255,19 +252,19 @@ public interface XMLAttributes {
      *         attribute is not in the list or if Namespace
      *         processing is not being performed.
      */
-    public String getType(String uri, String localName);
-
+    func getType(_ uri : String, _ localName : String) -> String
+    
     /**
      * Sets the value of the attribute at the specified index. This
      * method will overwrite the non-normalized value of the attribute.
-     * 
+     *
      * @param attrIndex The attribute index.
      * @param attrValue The new attribute value.
      *
      * @see #setNonNormalizedValue
      */
-    public void setValue(int attrIndex, String attrValue);
-
+    func setValue(_ attrIndex : Int, _ attrValue : String)
+    
     /**
      * Look up an attribute's value by index.
      * <p>
@@ -283,8 +280,8 @@ public interface XMLAttributes {
      *
      * @see #getLength
      */
-    public String getValue(int index);
-
+    func getValue(_ index : Int) -> String
+    
     /**
      * Look up an attribute's value by XML 1.0 qualified name.
      * <p>
@@ -297,8 +294,8 @@ public interface XMLAttributes {
      *         attribute is not in the list or if qualified names
      *         are not available
      */
-    public String getValue(String qName);
-
+    func getValue(_ qName : String) -> String
+    
     /**
      * Look up an attribute's value by Namespace name.
      * <p>
@@ -312,8 +309,8 @@ public interface XMLAttributes {
      * @return The attribute value as a string, or null if the
      *         attribute is not in the list.
      */
-    public String getValue(String uri, String localName);
-
+    func getValue(_ uri : String, _ localName : String) -> String
+    
     /**
      * Sets the non-normalized value of the attribute at the specified
      * index.
@@ -321,8 +318,8 @@ public interface XMLAttributes {
      * @param attrIndex The attribute index.
      * @param attrValue The new non-normalized attribute value.
      */
-    public void setNonNormalizedValue(int attrIndex, String attrValue);
-
+    func setNonNormalizedValue(_ attrIndex : Int, _ attrValue : String)
+    
     /**
      * Returns the non-normalized value of the attribute at the specified
      * index. If no non-normalized value is set, this method will return
@@ -331,8 +328,8 @@ public interface XMLAttributes {
      * @param attrIndex the attribute index
      * @return the non-normalized value of the attribute at the specified index
      */
-    public String getNonNormalizedValue(int attrIndex);
-
+    func getNonNormalizedValue(_ attrIndex : Int) -> String
+    
     /**
      * Sets whether an attribute is specified in the instance document
      * or not.
@@ -341,36 +338,36 @@ public interface XMLAttributes {
      * @param specified True if the attribute is specified in the instance
      *                  document.
      */
-    public void setSpecified(int attrIndex, boolean specified);
-
+    func setSpecified(_ attrIndex : Int, _ specified : Bool)
+    
     /**
      * Returns true if the attribute is specified in the instance document.
      *
      * @param attrIndex The attribute index
      * @return true if the attribute is specified in the instance document
      */
-    public boolean isSpecified(int attrIndex);
-
-
+    func isSpecified(_ attrIndex : Int) -> Bool
+    
+    
     /**
      * Look up an augmentation by attribute's index.
-     * 
+     *
      * @param attributeIndex The attribute index.
      * @return Augmentations
      */
-    public Augmentations getAugmentations (int attributeIndex);
-
+    func getAugmentations (_ attributeIndex : Int) -> Augmentations
+    
     /**
      * Look up an augmentation by namespace name.
-     * 
+     *
      * @param uri       The Namespace URI, or the empty string if
      *                  the name has no Namespace URI.
      * @param localPart The attribute's local name
      * @return Augmentations
      */
-    public Augmentations getAugmentations (String uri, String localPart);
-
-
+    func getAugmentations (_ uri : String, _ localPart : String) -> Augmentations
+    
+    
     /**
      * Look up an augmentation by XML 1.0 qualified name.
      *
@@ -378,16 +375,17 @@ public interface XMLAttributes {
      *
      * @return Augmentations
      */
-    public Augmentations getAugmentations(String qName);
-
-
+    func getAugmentations(_ qName : String) -> Augmentations
+    
+    
     /**
      * Sets the augmentations of the attribute at the specified index.
-     * 
+     *
      * @param attrIndex The attribute index.
      * @param augs      The augmentations.
      */
-    public void setAugmentations(int attrIndex, Augmentations augs);
-
-
-} // interface XMLAttributes
+    func setAugmentations(_ attrIndex : Int, _ augs : Augmentations);
+    
+    
+  }
+}

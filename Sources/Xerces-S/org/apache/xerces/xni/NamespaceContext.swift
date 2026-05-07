@@ -15,47 +15,47 @@
  * limitations under the License.
  */
 
-package org.apache.xerces.xni;
+import JavApi
 
-import java.util.Enumeration;
-
-/**
- * Represents an interface to query namespace information.
- * <p>
- * The prefix and namespace must be identical references for equal strings, thus
- * each string should be internalized (@see String.intern()) 
- * or added to the <code>SymbolTable</code>
- *
- * @see <a href="../../../../../xerces2/org/apache/xerces/util/SymbolTable.html">
- * org.apache.xerces.util.SymbolTable</a>
- *
- * @author Andy Clark, IBM
- *
- * @version $Id$
- */
-public interface NamespaceContext {
-
+extension org.apache.xerces.xni {
+  
+  /**
+   * Represents an interface to query namespace information.
+   * <p>
+   * The prefix and namespace must be identical references for equal strings, thus
+   * each string should be internalized (@see String.intern())
+   * or added to the <code>SymbolTable</code>
+   *
+   * @see <a href="../../../../../xerces2/org/apache/xerces/util/SymbolTable.html">
+   * org.apache.xerces.util.SymbolTable</a>
+   *
+   * @author Andy Clark, IBM
+   *
+   * @version $Id$
+   */
+  public protocol NamespaceContext {
+    
     //
-    // Constants
+    // - MARK: Constants
     //
-
+    
     /**
      * The XML Namespace ("http://www.w3.org/XML/1998/namespace"). This is
      * the Namespace URI that is automatically mapped to the "xml" prefix.
      */
-    public final static String XML_URI = "http://www.w3.org/XML/1998/namespace".intern();
-
+    static var XML_URI : String {get} //= "http://www.w3.org/XML/1998/namespace"
+    
     /**
      * XML Information Set REC
-     * all namespace attributes (including those named xmlns, 
+     * all namespace attributes (including those named xmlns,
      * whose [prefix] property has no value) have a namespace URI of http://www.w3.org/2000/xmlns/
      */
-    public final static String XMLNS_URI = "http://www.w3.org/2000/xmlns/".intern();
-
+    static var XMLNS_URI : String {get} //= "http://www.w3.org/2000/xmlns/"
+    
     //
-    // NamespaceContext methods
+    // -MARK: NamespaceContext methods
     //
-        
+    
     /**
      * Start a new Namespace context.
      * <p>
@@ -67,8 +67,8 @@ public interface NamespaceContext {
      *
      * @see #popContext
      */
-    public void pushContext();
-
+    func pushContext()
+    
     /**
      * Revert to the previous Namespace context.
      * <p>
@@ -84,8 +84,8 @@ public interface NamespaceContext {
      *
      * @see #pushContext
      */
-    public void popContext();
-
+    func popContext()
+    
     /**
      * Declare a Namespace prefix.
      * <p>
@@ -94,7 +94,7 @@ public interface NamespaceContext {
      * is popped, unless it is shadowed in a descendant context.
      * </p>
      * <p>
-     * Note that to declare a default Namespace, use the empty string.  
+     * Note that to declare a default Namespace, use the empty string.
      * The prefixes "xml" and "xmlns" can't be rebound.
      * </p>
      * <p>
@@ -103,7 +103,7 @@ public interface NamespaceContext {
      * </p>
      *
      * @param prefix The prefix to declare, or null for the empty
-     *        string. 
+     *        string.
      * @param uri The Namespace URI to associate with the prefix.
      *
      * @return true if the prefix was legal, false otherwise
@@ -111,31 +111,31 @@ public interface NamespaceContext {
      * @see #getURI
      * @see #getDeclaredPrefixAt
      */
-    public boolean declarePrefix(String prefix, String uri);
+    func declarePrefix(_ prefix : String, _ uri : String) -> Bool
     
-
+    
     /**
      * Look up a prefix and get the currently-mapped Namespace URI.
      * <p>
-     * This method looks up the prefix in the current context. If no mapping 
+     * This method looks up the prefix in the current context. If no mapping
      * is found, this methods will continue lookup in the parent context(s).
      * Use the empty string ("") for the default Namespace.
      * </p>
      *
-     * @param prefix The prefix to look up. 
+     * @param prefix The prefix to look up.
      *
      * @return The associated Namespace URI, or null if the prefix
      *         is undeclared in this context.
      */
-    public String getURI(String prefix);
+    func getURI(_ `prefix` : String) -> String
     
     /**
      * Look up a namespace URI and get one of the mapped prefix.
      * <p>
      * This method looks up the namespace URI in the current context.
-     * If more than one prefix is currently mapped to the same URI, 
+     * If more than one prefix is currently mapped to the same URI,
      * this method will make an arbitrary selection
-     * If no mapping is found, this methods will continue lookup in the 
+     * If no mapping is found, this methods will continue lookup in the
      * parent context(s).
      * </p>
      *
@@ -146,7 +146,7 @@ public interface NamespaceContext {
      *
      * @see #getPrefix
      */
-    public String getPrefix(String uri);
+    func getPrefix(_ uri : String) -> String
     
     /**
      * Return a count of locally declared prefixes, including
@@ -154,37 +154,42 @@ public interface NamespaceContext {
      *
      * @return a count of locally declared prefixes
      */
-    public int getDeclaredPrefixCount();
-
-    /** 
+    func getDeclaredPrefixCount() -> Int
+    
+    /**
      * Returns the prefix at the specified index in the current context.
      *
      * @param index the location of the declared prefix in the current context
      * @return the prefix at the specified index in the current context
      */
-    public String getDeclaredPrefixAt(int index);
-
-	/**
-	 * Return an enumeration of all prefixes whose declarations are active 
-     * in the current context. This includes declarations from parent contexts 
+    func getDeclaredPrefixAt(_ index : Int) -> String
+    
+    /**
+     * Return an enumeration of all prefixes whose declarations are active
+     * in the current context. This includes declarations from parent contexts
      * that have not been overridden.
      *
      * @return an {@link Enumeration} of all prefixes whose declarations are active
      * in the current context
-	 */
-    public Enumeration getAllPrefixes();
+     */
+    func getAllPrefixes() -> any java.util.Enumeration
     
     /**
      * Reset this Namespace support object for reuse.
      *
      * <p>It is necessary to invoke this method before reusing the
      * Namespace support object for a new session.</p>
-     * 
+     *
      * <p>Note that implementations of this method need to ensure that
      * the declaration of the prefixes "xmlns" and "xml" are available.</p>
      */
-    public void reset();
+    func reset();
     
-
-
-} // interface NamespaceContext
+  } // interface NamespaceContext
+  
+  
+}
+extension org.apache.xerces.xni.NamespaceContext {
+  var XML_URI : String {"http://www.w3.org/XML/1998/namespace"}
+  var XMLNS_URI : String {"http://www.w3.org/2000/xmlns/"}
+}
