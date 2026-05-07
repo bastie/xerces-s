@@ -15,37 +15,36 @@
  * limitations under the License.
  */
 
-package org.apache.xerces.xni.parser;
-
-import org.apache.xerces.xni.XMLDocumentHandler;
-
-/**
- * Defines a document source. In other words, any object that implements
- * this interface is able to emit document "events" to the registered
- * document handler. These events could be produced by parsing an XML
- * document, could be generated from some other source, or could be
- * created programmatically. This interface does not say <em>how</em>
- * the events are created, only that the implementor is able to emit
- * them.
- *
- * @author Andy Clark, IBM
- *
- * @version $Id$
- */
-public interface XMLDocumentSource {
-
+extension org.apache.xerces.xni.parser {
+  
+  /**
+   * Defines a document source. In other words, any object that implements
+   * this interface is able to emit document "events" to the registered
+   * document handler. These events could be produced by parsing an XML
+   * document, could be generated from some other source, or could be
+   * created programmatically. This interface does not say <em>how</em>
+   * the events are created, only that the implementor is able to emit
+   * them.
+   *
+   * @author Andy Clark, IBM
+   *
+   * @version $Id$
+   */
+  public protocol XMLDocumentSource {
+    
     //
     // XMLDocumentSource methods
     //
-
+    
     /** Sets the document handler. */
-    public void setDocumentHandler(XMLDocumentHandler handler);
-
+    func setDocumentHandler(_ handler : org.apache.xerces.xni.XMLDocumentHandler)
+    
     /**
      * Returns the document handler.
      *
      * @return the document handler
      */
-    public XMLDocumentHandler getDocumentHandler();
-
-} // interface XMLDocumentSource
+    func getDocumentHandler() -> org.apache.xerces.xni.XMLDocumentHandler
+    
+  } // interface XMLDocumentSource
+}

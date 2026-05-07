@@ -15,46 +15,44 @@
  * limitations under the License.
  */
 
-package org.apache.xerces.xni;
+extension org.apache.xerces.xni {
 
-import org.apache.xerces.xni.parser.XMLDTDSource;
-
-/**
- * The DTD handler interface defines callback methods to report
- * information items in the DTD of an XML document. Parser components
- * interested in DTD information implement this interface and are
- * registered as the DTD handler on the DTD source.
- *
- * @see XMLDTDContentModelHandler
- *
- * @author Andy Clark, IBM
- *
- * @version $Id$
- */
-public interface XMLDTDHandler {
-
+  /**
+   * The DTD handler interface defines callback methods to report
+   * information items in the DTD of an XML document. Parser components
+   * interested in DTD information implement this interface and are
+   * registered as the DTD handler on the DTD source.
+   *
+   * @see XMLDTDContentModelHandler
+   *
+   * @author Andy Clark, IBM
+   *
+   * @version $Id$
+   */
+  public protocol XMLDTDHandler {
+    
     //
     // Constants
     //
-
+    
     /**
-     * Conditional section: INCLUDE. 
+     * Conditional section: INCLUDE.
      *
      * @see XMLDTDHandler#CONDITIONAL_IGNORE
      */
-    public static final short CONDITIONAL_INCLUDE = 0;
-
-    /** 
+    static var CONDITIONAL_INCLUDE : Int16 { get }// = 0;
+    
+    /**
      * Conditional section: IGNORE.
      *
      * @see XMLDTDHandler#CONDITIONAL_INCLUDE
      */
-    public static final short CONDITIONAL_IGNORE = 1;
-
+    static var CONDITIONAL_IGNORE : Int16 { get } // = 1;
+    
     //
     // XMLDTDHandler methods
     //
-
+    
     /**
      * The start of the DTD.
      *
@@ -66,13 +64,13 @@ public interface XMLDTDHandler {
      * @param augmentations additional information that may include infoset augmentations
      * @throws XNIException thrown by handler to signal an error
      */
-    public void startDTD(XMLLocator locator, Augmentations augmentations) 
-        throws XNIException;
-
+    func startDTD(_ locator : XMLLocator, _ augmentations : Augmentations)
+    throws (XNIException)
+    
     /**
      * This method notifies of the start of a parameter entity. The parameter
      * entity name start with a '%' character.
-     * 
+     *
      * @param name the name of the parameter entity
      * @param identifier the resource identifier
      * @param encoding the auto-detected IANA encoding name of the entity stream. This
@@ -82,50 +80,50 @@ public interface XMLDTDHandler {
      *
      * @throws XNIException thrown by handler to signal an error
      */
-    public void startParameterEntity(String name, 
-                                     XMLResourceIdentifier identifier,
-                                     String encoding,
-                                     Augmentations augmentations) throws XNIException;
-
+    func startParameterEntity(_ name : String,
+                              identifier : XMLResourceIdentifier,
+                              _ encoding : String,
+                                     _ augmentations : Augmentations) throws (XNIException)
+    
     /**
      * Notifies of the presence of a TextDecl line in an entity. If present,
      * this method will be called immediately following the startEntity call.
      * <p>
      * <strong>Note:</strong> This method is only called for external
      * parameter entities referenced in the DTD.
-     * 
+     *
      * @param version the XML version, or null if not specified
      * @param encoding the IANA encoding name of the entity
      * @param augmentations additional information that may include infoset augmentations
      *
      * @throws XNIException thrown by handler to signal an error
      */
-    public void textDecl(String version, String encoding,
-                         Augmentations augmentations) throws XNIException;
-
+    func textDecl(_ version : String, _ encoding : String,
+                         _ augmentations : Augmentations) throws (XNIException)
+    
     /**
      * This method notifies the end of a parameter entity. Parameter entity
      * names begin with a '%' character.
-     * 
+     *
      * @param name the name of the parameter entity
      * @param augmentations additional information that may include infoset augmentations
      *
      * @throws XNIException thrown by handler to signal an error
      */
-    public void endParameterEntity(String name, Augmentations augmentations) 
-        throws XNIException;
-
+    func endParameterEntity(_ name : String, _ augmentations : Augmentations)
+    throws (XNIException)
+    
     /**
      * The start of the DTD external subset.
-     * 
+     *
      * @param identifier the resource identifier
      * @param augmentations additional information that may include infoset augmentations
      * @throws XNIException thrown by handler to signal an error
      */
-    public void startExternalSubset(XMLResourceIdentifier identifier, 
-                                    Augmentations augmentations) 
-        throws XNIException;
-
+    func startExternalSubset(_ identifier : XMLResourceIdentifier,
+                                    _ augmentations : Augmentations)
+    throws (XNIException)
+    
     /**
      * The end of the DTD external subset.
      *
@@ -133,20 +131,20 @@ public interface XMLDTDHandler {
      *
      * @throws XNIException thrown by handler to signal an error
      */
-    public void endExternalSubset(Augmentations augmentations) 
-        throws XNIException;
-
+    func endExternalSubset(_ augmentations : Augmentations)
+    throws (XNIException)
+    
     /**
      * A comment.
-     * 
+     *
      * @param text the text in the comment
      * @param augmentations additional information that may include infoset augmentations
      *
      * @throws XNIException thrown by application to signal an error
      */
-    public void comment(XMLString text, Augmentations augmentations) 
-        throws XNIException;
-
+    func comment(_ text : XMLString, _ augmentations : Augmentations)
+    throws (XNIException)
+    
     /**
      * A processing instruction. Processing instructions consist of a
      * target name and, optionally, text data. The data is only meaningful
@@ -157,44 +155,44 @@ public interface XMLDTDHandler {
      * element attributes but are <strong>not</strong> parsed or presented
      * to the application as anything other than text. The application is
      * responsible for parsing the data.
-     * 
+     *
      * @param target the target
      * @param data the data or null if none specified
      * @param augmentations additional information that may include infoset augmentations
      *
      * @throws XNIException thrown by handler to signal an error
      */
-    public void processingInstruction(String target, XMLString data,
-                                      Augmentations augmentations)
-        throws XNIException;
-
+    func processingInstruction(_ target : String, _ data : XMLString,
+                                      _ augmentations : Augmentations)
+    throws (XNIException)
+    
     /**
      * An element declaration.
-     * 
+     *
      * @param name the name of the element
      * @param contentModel the element content model
      * @param augmentations additional information that may include infoset augmentations
      *
      * @throws XNIException thrown by handler to signal an error
      */
-    public void elementDecl(String name, String contentModel,
-                            Augmentations augmentations)
-        throws XNIException;
-
+    func elementDecl(_ name : String, _ contentModel : String,
+                            _ augmentations : Augmentations)
+    throws (XNIException)
+    
     /**
      * The start of an attribute list.
-     * 
+     *
      * @param elementName the name of the element that this attribute list is associated with
      * @param augmentations additional information that may include infoset augmentations
      *
      * @throws XNIException thrown by handler to signal an error
      */
-    public void startAttlist(String elementName,
-                             Augmentations augmentations) throws XNIException;
-
+    func startAttlist(_ elementName : String,
+                             _ augmentations : Augmentations) throws (XNIException)
+    
     /**
      * An attribute declaration.
-     * 
+     *
      * @param elementName the name of the element that this attribute is associated with
      * @param attributeName the name of the attribute
      * @param type the attribute type. This value will be one of the following:
@@ -211,12 +209,12 @@ public interface XMLDTDHandler {
      *
      * @throws XNIException thrown by handler to signal an error
      */
-    public void attributeDecl(String elementName, String attributeName, 
-                              String type, String[] enumeration, 
-                              String defaultType, XMLString defaultValue,
-                              XMLString nonNormalizedDefaultValue, Augmentations augmentations)
-        throws XNIException;
-
+    func attributeDecl(_ elementName : String, _ attributeName : String,
+                       _ type : String, _ enumeration : [String]?,
+                              _ defaultType : String, _ defaultValue : XMLString,
+                       _ nonNormalizedDefaultValue : XMLString, _ augmentations : Augmentations)
+    throws (XNIException)
+    
     /**
      * The end of an attribute list.
      *
@@ -224,30 +222,30 @@ public interface XMLDTDHandler {
      *
      * @throws XNIException thrown by handler to signal an error
      */
-    public void endAttlist(Augmentations augmentations) throws XNIException;
-
+    func endAttlist(_ augmentations : Augmentations) throws (XNIException)
+    
     /**
      * An internal entity declaration.
-     * 
+     *
      * @param name the name of the entity. Parameter entity names start with '%', whereas
      *             the name of a general entity is just the entity name
      * @param text the value of the entity
      * @param nonNormalizedText the non-normalized value of the entity. This
-     *             value contains the same sequence of characters that was in 
+     *             value contains the same sequence of characters that was in
      *             the internal entity declaration, without any entity
      *             references expanded.
      * @param augmentations additional information that may include infoset augmentations
      *
      * @throws XNIException thrown by handler to signal an error
      */
-    public void internalEntityDecl(String name, XMLString text, 
-                                   XMLString nonNormalizedText,
-                                   Augmentations augmentations) 
-        throws XNIException;
-
+    func internalEntityDecl(_ name : String, _ text : XMLString,
+                            _ nonNormalizedText : XMLString,
+                                   _ augmentations : Augmentations)
+    throws (XNIException)
+    
     /**
      * An external entity declaration.
-     * 
+     *
      * @param name the name of the entity. Parameter entity names start with '%', whereas
      *             the name of a general entity is just the entity name
      * @param identifier an object containing all location information pertinent to this
@@ -256,14 +254,14 @@ public interface XMLDTDHandler {
      *
      * @throws XNIException thrown by handler to signal an error
      */
-    public void externalEntityDecl(String name, 
-                                   XMLResourceIdentifier identifier,
-                                   Augmentations augmentations) 
-        throws XNIException;
-
+    func externalEntityDecl(_ name : String,
+                            _ identifier : XMLResourceIdentifier,
+                                   _ augmentations : Augmentations)
+    throws (XNIException)
+    
     /**
      * An unparsed entity declaration.
-     * 
+     *
      * @param name the name of the entity
      * @param identifier an object containing all location information pertinent to this
      *                   unparsed entity declaration
@@ -272,26 +270,26 @@ public interface XMLDTDHandler {
      *
      * @throws XNIException thrown by handler to signal an error
      */
-    public void unparsedEntityDecl(String name, 
-                                   XMLResourceIdentifier identifier, 
-                                   String notation, Augmentations augmentations) 
-        throws XNIException;
-
+    func unparsedEntityDecl(_ name : String,
+                            _ identifier : XMLResourceIdentifier,
+                            _ notation : String, _ augmentations : Augmentations)
+    throws (XNIException)
+    
     /**
      * A notation declaration
-     * 
+     *
      * @param name the name of the notation
      * @param identifier an object containing all location information pertinent to this notation
      * @param augmentations additional information that may include infoset augmentations
      *
      * @throws XNIException thrown by handler to signal an error
      */
-    public void notationDecl(String name, XMLResourceIdentifier identifier,
-                             Augmentations augmentations) throws XNIException;
-
+    func notationDecl(_ name : String, _ identifier : XMLResourceIdentifier,
+                             _ augmentations : Augmentations) throws (XNIException)
+    
     /**
      * The start of a conditional section.
-     * 
+     *
      * @param type the type of the conditional section. This value will either be
      *             CONDITIONAL_INCLUDE or CONDITIONAL_IGNORE
      * @param augmentations additional information that may include infoset augmentations
@@ -301,9 +299,9 @@ public interface XMLDTDHandler {
      * @see XMLDTDHandler#CONDITIONAL_INCLUDE
      * @see XMLDTDHandler#CONDITIONAL_IGNORE
      */
-    public void startConditional(short type, Augmentations augmentations) 
-        throws XNIException;
-
+    func startConditional(_ type : Int16, _ augmentations : Augmentations)
+    throws (XNIException)
+    
     /**
      * Characters within an IGNORE conditional section.
      *
@@ -312,9 +310,9 @@ public interface XMLDTDHandler {
      *
      * @throws XNIException thrown by handler to signal an error
      */
-    public void ignoredCharacters(XMLString text, Augmentations augmentations) 
-        throws XNIException;
-
+    func ignoredCharacters(_ text : XMLString, _ augmentations : Augmentations)
+    throws (XNIException)
+    
     /**
      * The end of a conditional section.
      *
@@ -322,8 +320,8 @@ public interface XMLDTDHandler {
      *
      * @throws XNIException thrown by handler to signal an error
      */
-    public void endConditional(Augmentations augmentations) throws XNIException;
-
+    func endConditional(_ augmentations : Augmentations) throws (XNIException)
+    
     /**
      * The end of the DTD.
      *
@@ -331,20 +329,39 @@ public interface XMLDTDHandler {
      *
      * @throws XNIException thrown by handler to signal an error
      */
-    public void endDTD(Augmentations augmentations) throws XNIException;
-
+    func endDTD(_ augmentations : Augmentations) throws (XNIException)
+    
     /**
      * Sets the source of this handler.
      *
      * @param source the source of this handler
      */
-    public void setDTDSource(XMLDTDSource source);
-
+    func setDTDSource(_ source : org.apache.xerces.xni.parser.XMLDTDSource)
+    
     /**
      * Returns the source from which this handler derives its events.
      *
      * @return the source from which this handler derives its events
      */
-    public XMLDTDSource getDTDSource();
+    func getDTDSource() -> org.apache.xerces.xni.parser.XMLDTDSource
+    
+  } // interface XMLDTDHandler
+}
 
-} // interface XMLDTDHandler
+extension org.apache.xerces.xni.XMLDTDHandler {
+  /**
+   * Conditional section: INCLUDE.
+   *
+   * @see XMLDTDHandler#CONDITIONAL_IGNORE
+   */
+  static var CONDITIONAL_INCLUDE : Int16 { 0 }// = 0;
+  
+  /**
+   * Conditional section: IGNORE.
+   *
+   * @see XMLDTDHandler#CONDITIONAL_INCLUDE
+   */
+  static var CONDITIONAL_IGNORE : Int16 { 1 } // = 1;
+  
+
+}

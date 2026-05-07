@@ -15,32 +15,30 @@
  * limitations under the License.
  */
 
-package org.apache.xerces.xni;
-
-import org.apache.xerces.xni.parser.XMLDTDContentModelSource;
-
-/**
- * The DTD content model handler interface defines callback methods 
- * to report information items in DTD content models of an element
- * declaration. Parser components interested in DTD content model
- * information implement this interface and are registered as the DTD
- * content model handler on the DTD content model source.
- *
- * @see XMLDTDHandler
- *
- * @author Andy Clark, IBM
- *
- * @version $Id$
- */
-public interface XMLDTDContentModelHandler {
-
+extension org.apache.xerces.xni {
+  
+  /**
+   * The DTD content model handler interface defines callback methods
+   * to report information items in DTD content models of an element
+   * declaration. Parser components interested in DTD content model
+   * information implement this interface and are registered as the DTD
+   * content model handler on the DTD content model source.
+   *
+   * @see XMLDTDHandler
+   *
+   * @author Andy Clark, IBM
+   *
+   * @version $Id$
+   */
+  public protocol XMLDTDContentModelHandler {
+    
     //
     // Constants
     //
-
+    
     // separators
-
-    /** 
+    
+    /**
      * A choice separator for children and mixed content models. This separator is used
      * to specify that the allowed child is one of a collection.
      * <p>For example:</p>
@@ -53,8 +51,8 @@ public interface XMLDTDContentModelHandler {
      *
      * @see XMLDTDContentModelHandler#SEPARATOR_SEQUENCE
      */
-    public static final short SEPARATOR_CHOICE = 0;
-
+    static var SEPARATOR_CHOICE : Int16 {get} //= 0;
+    
     /**
      * A sequence separator for children content models. This separator is used to
      * specify that the allowed children must follow in the specified sequence.
@@ -66,11 +64,11 @@ public interface XMLDTDContentModelHandler {
      *
      * @see XMLDTDContentModelHandler#SEPARATOR_CHOICE
      */
-    public static final short SEPARATOR_SEQUENCE = 1;
-
+    static var SEPARATOR_SEQUENCE : Int16 {get}// = 1;
+    
     // occurrence counts
-
-    /** 
+    
+    /**
      * This occurrence count limits the element, choice, or sequence in a children content
      * model to zero or one. In other words, the child is optional.
      * <p>For example:</p>
@@ -81,9 +79,9 @@ public interface XMLDTDContentModelHandler {
      * @see XMLDTDContentModelHandler#OCCURS_ZERO_OR_MORE
      * @see XMLDTDContentModelHandler#OCCURS_ONE_OR_MORE
      */
-    public static final short OCCURS_ZERO_OR_ONE = 2;
-
-    /** 
+    static var OCCURS_ZERO_OR_ONE : Int16 {get}// = 2;
+    
+    /**
      * This occurrence count limits the element, choice, or sequence in a children content
      * model to zero or more. In other words, the child may appear an arbitrary number of
      * times, or not at all. This occurrence count is also used for mixed content models.
@@ -96,9 +94,9 @@ public interface XMLDTDContentModelHandler {
      * @see XMLDTDContentModelHandler#OCCURS_ZERO_OR_ONE
      * @see XMLDTDContentModelHandler#OCCURS_ONE_OR_MORE
      */
-    public static final short OCCURS_ZERO_OR_MORE = 3;
-
-    /** 
+    static var OCCURS_ZERO_OR_MORE : Int16 { get } // = 3;
+    
+    /**
      * This occurrence count limits the element, choice, or sequence in a children content
      * model to one or more. In other words, the child may appear an arbitrary number of
      * times, but must appear at least once.
@@ -110,27 +108,27 @@ public interface XMLDTDContentModelHandler {
      * @see XMLDTDContentModelHandler#OCCURS_ZERO_OR_ONE
      * @see XMLDTDContentModelHandler#OCCURS_ZERO_OR_MORE
      */
-    public static final short OCCURS_ONE_OR_MORE = 4;
-
+    static var OCCURS_ONE_OR_MORE : Int16 {get} // = 4
+    
     //
     // XMLDTDContentModelHandler methods
     //
-
+    
     /**
      * The start of a content model. Depending on the type of the content
      * model, specific methods may be called between the call to the
      * startContentModel method and the call to the endContentModel method.
-     * 
+     *
      * @param elementName the name of the element
      * @param augmentations additional information that may include infoset augmentations
      *
      * @throws XNIException thrown by handler to signal an error
      */
-    public void startContentModel(String elementName, Augmentations augmentations)
-        throws XNIException;
-
-    /** 
-     * A content model of ANY. 
+    func startContentModel(_ elementName : String, _ augmentations : Augmentations)
+    throws (XNIException)
+    
+    /**
+     * A content model of ANY.
      *
      * @param augmentations additional information that may include infoset augmentations
      *
@@ -139,8 +137,8 @@ public interface XMLDTDContentModelHandler {
      * @see XMLDTDContentModelHandler#empty
      * @see XMLDTDContentModelHandler#startGroup
      */
-    public void any(Augmentations augmentations) throws XNIException;
-
+    func `any`(_ augmentations : Augmentations) throws (XNIException)
+    
     /**
      * A content model of EMPTY.
      *
@@ -151,11 +149,11 @@ public interface XMLDTDContentModelHandler {
      * @see XMLDTDContentModelHandler#any
      * @see XMLDTDContentModelHandler#startGroup
      */
-    public void empty(Augmentations augmentations) throws XNIException;
-
+    func empty(_ augmentations : Augmentations) throws (XNIException)
+    
     /**
-     * A start of either a mixed or children content model. A mixed content model will 
-     * immediately be followed by a call to the {@link #pcdata(Augmentations)} method. 
+     * A start of either a mixed or children content model. A mixed content model will
+     * immediately be followed by a call to the {@link #pcdata(Augmentations)} method.
      * A children content model will contain additional groups and/or elements.
      *
      * @param augmentations additional information that may include infoset augmentations
@@ -165,35 +163,35 @@ public interface XMLDTDContentModelHandler {
      * @see XMLDTDContentModelHandler#any
      * @see XMLDTDContentModelHandler#empty
      */
-    public void startGroup(Augmentations augmentations) throws XNIException;
-
+    func startGroup(_ augmentations : Augmentations) throws (XNIException)
+    
     /**
-     * The appearance of "#PCDATA" within a group signifying a mixed content model. 
+     * The appearance of "#PCDATA" within a group signifying a mixed content model.
      * This method will be the first called following the content model's {@link #startGroup(Augmentations)}.
      *
      * @param augmentations additional information that may include infoset augmentations
-     *     
+     *
      * @throws XNIException thrown by handler to signal an error
      *
      * @see XMLDTDContentModelHandler#startGroup
      */
-    public void pcdata(Augmentations augmentations) throws XNIException;
-
+    func pcdata(_ augmentations : Augmentations) throws (XNIException)
+    
     /**
      * A referenced element in a mixed or children content model.
-     * 
+     *
      * @param elementName the name of the referenced element
      * @param augmentations additional information that may include infoset augmentations
      *
      * @throws XNIException thrown by handler to signal an error
      */
-    public void element(String elementName, Augmentations augmentations)
-        throws XNIException;
-
+    func element(_ elementName : String, _ augmentations : Augmentations)
+    throws (XNIException)
+    
     /**
      * The separator between choices or sequences of a mixed or children
      * content model.
-     * 
+     *
      * @param separator the type of children separator
      * @param augmentations additional information that may include infoset augmentations
      *
@@ -202,13 +200,13 @@ public interface XMLDTDContentModelHandler {
      * @see XMLDTDContentModelHandler#SEPARATOR_CHOICE
      * @see XMLDTDContentModelHandler#SEPARATOR_SEQUENCE
      */
-    public void separator(short separator, Augmentations augmentations)
-        throws XNIException;
-
+    func separator(_ separator : Int16, _ augmentations : Augmentations)
+    throws (XNIException)
+    
     /**
      * The occurrence count for a child in a children content model or
      * for the mixed content model group.
-     * 
+     *
      * @param occurrence the occurrence count for the last element or group
      * @param augmentations additional information that may include infoset augmentations
      *
@@ -218,9 +216,9 @@ public interface XMLDTDContentModelHandler {
      * @see XMLDTDContentModelHandler#OCCURS_ZERO_OR_MORE
      * @see XMLDTDContentModelHandler#OCCURS_ONE_OR_MORE
      */
-    public void occurrence(short occurrence, Augmentations augmentations)
-        throws XNIException;
-
+    func occurrence(_ occurrence : Int16, _ augmentations : Augmentations)
+    throws (XNIException)
+    
     /**
      * The end of a group for mixed or children content models.
      *
@@ -228,8 +226,8 @@ public interface XMLDTDContentModelHandler {
      *
      * @throws XNIException thrown by handler to signal an error
      */
-    public void endGroup(Augmentations augmentations) throws XNIException;
-
+    func endGroup(_ augmentations : Augmentations) throws (XNIException)
+    
     /**
      * The end of a content model.
      *
@@ -237,22 +235,37 @@ public interface XMLDTDContentModelHandler {
      *
      * @throws XNIException thrown by handler to signal an error
      */
-    public void endContentModel(Augmentations augmentations) throws XNIException;
-
+    func endContentModel(_ augmentations : Augmentations) throws (XNIException)
+    
     /**
      * Set content model source.
      *
      * @param source content model source
      * @see XMLDTDContentModelSource
      */
-    public void setDTDContentModelSource(XMLDTDContentModelSource source);
-
+    func setDTDContentModelSource(_ source : org.apache.xerces.xni.parser.XMLDTDContentModelSource)
+    
     /**
      * Get content model source.
      *
      * @return content model source
      * @see XMLDTDContentModelSource
      */
-    public XMLDTDContentModelSource getDTDContentModelSource();
+    func getDTDContentModelSource() -> org.apache.xerces.xni.parser.XMLDTDContentModelSource
+    
+  } // interface XMLDTDContentModelHandler
+}
 
-} // interface XMLDTDContentModelHandler
+extension org.apache.xerces.xni.XMLDTDContentModelHandler {
+  
+  static var SEPARATOR_CHOICE : Int16 {0}
+  
+  static var SEPARATOR_SEQUENCE : Int16 {1}
+  
+  static var OCCURS_ZERO_OR_ONE : Int16 {2}
+  
+  static var OCCURS_ZERO_OR_MORE : Int16 {3}
+  
+  static var OCCURS_ONE_OR_MORE : Int16 {4}
+  
+}

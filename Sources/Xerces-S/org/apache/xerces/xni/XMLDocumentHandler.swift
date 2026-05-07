@@ -15,29 +15,26 @@
  * limitations under the License.
  */
 
-package org.apache.xerces.xni;
-
-import org.apache.xerces.xni.parser.XMLDocumentSource;
-
-/**
- * The document handler interface defines callback methods to report
- * information items in XML documents. Parser components interested in 
- * document information implement this interface and are registered
- * as the document handler on the document source.
- *
- * @author Andy Clark, IBM
- *
- * @version $Id$
- */
-public interface XMLDocumentHandler {
-
+extension org.apache.xerces.xni {
+  
+  /**
+   * The document handler interface defines callback methods to report
+   * information items in XML documents. Parser components interested in
+   * document information implement this interface and are registered
+   * as the document handler on the document source.
+   *
+   * @author Andy Clark, IBM
+   *
+   */
+  public protocol XMLDocumentHandler {
+    
     //
     // XMLDocumentHandler methods
     //
-
+    
     /**
      * The start of the document.
-     * 
+     *
      * @param locator  The document locator, or null if the document
      *                 location cannot be reported during the parsing
      *                 of this document. However, it is <em>strongly</em>
@@ -57,34 +54,34 @@ public interface XMLDocumentHandler {
      *                 for copying the namespace bindings from the
      *                 the current context (and its parent contexts)
      *                 if that information is important.
-     *                 
+     *
      * @param augs     Additional information that may include infoset augmentations
      * @throws XNIException if an error occurs. This should be handled by implementations of {@link org.apache.xerces.xni.XMLDocumentHandler}
      */
-    public void startDocument(XMLLocator locator, String encoding,
-                              NamespaceContext namespaceContext,
-                              Augmentations augs) 
-        throws XNIException;
-
+    func startDocument(_ locator : XMLLocator, _ encoding : String,
+                              _ namespaceContext : NamespaceContext,
+                              _ augs : Augmentations)
+    throws (XNIException)
+    
     /**
      * Notifies of the presence of an XMLDecl line in the document. If
      * present, this method will be called immediately following the
      * startDocument call.
-     * 
+     *
      * @param version    The XML version.
      * @param encoding   The IANA encoding name of the document, or null if
      *                   not specified.
      * @param standalone The standalone value, or null if not specified.
      * @param augs       Additional information that may include infoset augmentations
-     *                   
+     *
      * @throws XNIException if an error occurs. This should be handled by implementations of {@link org.apache.xerces.xni.XMLDocumentHandler}
      */
-    public void xmlDecl(String version, String encoding, String standalone, Augmentations augs)
-        throws XNIException;
-
+    func xmlDecl(_ version : String, _ encoding : String, _ standalone : String, _ augs : Augmentations)
+    throws (XNIException)
+    
     /**
      * Notifies of the presence of the DOCTYPE line in the document.
-     * 
+     *
      * @param rootElement
      *                 The name of the root element.
      * @param publicId The identifier if an external DTD or null
@@ -92,22 +89,22 @@ public interface XMLDocumentHandler {
      * @param systemId The system identifier if an external DTD, null
      *                 otherwise.
      * @param augs     Additional information that may include infoset augmentations
-     *                 
+     *
      * @throws XNIException if an error occurs. This should be handled by implementations of {@link org.apache.xerces.xni.XMLDocumentHandler}
      */
-    public void doctypeDecl(String rootElement, String publicId, String systemId, Augmentations augs)
-        throws XNIException;
-
+    func doctypeDecl(_ rootElement : String, _ publicId : String, _ systemId : String, _ augs : Augmentations)
+    throws (XNIException)
+    
     /**
      * A comment.
-     * 
+     *
      * @param text   The text in the comment.
      * @param augs   Additional information that may include infoset augmentations
-     *               
+     *
      * @exception XNIException Thrown by application to signal an error.
      */
-    public void comment(XMLString text, Augmentations augs) throws XNIException;
-
+    func comment(_ text : XMLString, _ augs : Augmentations) throws (XNIException)
+    
     /**
      * A processing instruction. Processing instructions consist of a
      * target name and, optionally, text data. The data is only meaningful
@@ -118,40 +115,40 @@ public interface XMLDocumentHandler {
      * element attributes but are <strong>not</strong> parsed or presented
      * to the application as anything other than text. The application is
      * responsible for parsing the data.
-     * 
+     *
      * @param target The target.
      * @param data   The data or null if none specified.
      * @param augs   Additional information that may include infoset augmentations
-     *               
+     *
      * @throws XNIException if an error occurs. This should be handled by implementations of {@link org.apache.xerces.xni.XMLDocumentHandler}
      */
-    public void processingInstruction(String target, XMLString data, Augmentations augs)
-        throws XNIException;
-
+    func processingInstruction(_ target : String, _ data : XMLString, _ augs : Augmentations)
+    throws (XNIException)
+    
     /**
      * The start of an element.
-     * 
+     *
      * @param element    The name of the element.
      * @param attributes The element attributes.
      * @param augs       Additional information that may include infoset augmentations
-     *                   
+     *
      * @throws XNIException if an error occurs. This should be handled by implementations of {@link org.apache.xerces.xni.XMLDocumentHandler}
      */
-    public void startElement(QName element, XMLAttributes attributes, Augmentations augs)
-        throws XNIException;
-
+    func startElement(_ element : QName, _ attributes : XMLAttributes, _ augs : Augmentations)
+    throws (XNIException)
+    
     /**
      * An empty element.
-     * 
+     *
      * @param element    The name of the element.
      * @param attributes The element attributes.
      * @param augs       Additional information that may include infoset augmentations
-     *                   
+     *
      * @throws XNIException if an error occurs. This should be handled by implementations of {@link org.apache.xerces.xni.XMLDocumentHandler}
      */
-    public void emptyElement(QName element, XMLAttributes attributes, Augmentations augs)
-        throws XNIException;
-
+    func emptyElement(_ element : QName, _ attributes : XMLAttributes, _ augs : Augmentations)
+    throws (XNIException)
+    
     /**
      * This method notifies the start of a general entity.
      * <p>
@@ -167,14 +164,14 @@ public interface XMLDocumentHandler {
      *                 internal entities or a document entity that is
      *                 parsed from a java.io.Reader).
      * @param augs     Additional information that may include infoset augmentations
-     *                 
+     *
      * @throws XNIException if an error occurs. This should be handled by implementations of {@link org.apache.xerces.xni.XMLDocumentHandler}
      */
-    public void startGeneralEntity(String name,
-                                   XMLResourceIdentifier identifier,
-                                   String encoding,
-                                   Augmentations augs) throws XNIException;
-
+    func startGeneralEntity(_ name : String,
+                            _ identifier : XMLResourceIdentifier,
+                            _ encoding : String,
+                            _ augs : Augmentations) throws (XNIException)
+    
     /**
      * Notifies of the presence of a TextDecl line in an entity. If present,
      * this method will be called immediately following the startEntity call.
@@ -185,38 +182,38 @@ public interface XMLDocumentHandler {
      * <p>
      * <strong>Note:</strong> This method is not called for entity references
      * appearing as part of attribute values.
-     * 
+     *
      * @param version  The XML version, or null if not specified.
      * @param encoding The IANA encoding name of the entity.
      * @param augs     Additional information that may include infoset augmentations
-     *                 
+     *
      * @throws XNIException if an error occurs. This should be handled by implementations of {@link org.apache.xerces.xni.XMLDocumentHandler}
      */
-    public void textDecl(String version, String encoding, Augmentations augs) throws XNIException;
-
+    func textDecl(_ version : String, _ encoding : String, _ augs : Augmentations) throws (XNIException)
+    
     /**
      * This method notifies the end of a general entity.
      * <p>
      * <strong>Note:</strong> This method is not called for entity references
      * appearing as part of attribute values.
-     * 
+     *
      * @param name   The name of the entity.
      * @param augs   Additional information that may include infoset augmentations
-     *               
+     *
      * @throws XNIException if an error occurs. This should be handled by implementations of {@link org.apache.xerces.xni.XMLDocumentHandler}
      */
-    public void endGeneralEntity(String name, Augmentations augs) throws XNIException;
-
+    func endGeneralEntity(_ name : String, _ augs : Augmentations) throws (XNIException)
+    
     /**
      * Character content.
-     * 
+     *
      * @param text   The content.
      * @param augs   Additional information that may include infoset augmentations
-     *               
+     *
      * @throws XNIException if an error occurs. This should be handled by implementations of {@link org.apache.xerces.xni.XMLDocumentHandler}
      */
-    public void characters(XMLString text, Augmentations augs) throws XNIException;
-
+    func characters(_ text : XMLString, _ augs : Augmentations) throws (XNIException)
+    
     /**
      * Ignorable whitespace. For this method to be called, the document
      * source must have some way of determining that the text containing
@@ -224,67 +221,68 @@ public interface XMLDocumentHandler {
      * example, the validator can determine if a length of whitespace
      * characters in the document are ignorable based on the element
      * content model.
-     * 
+     *
      * @param text   The ignorable whitespace.
      * @param augs   Additional information that may include infoset augmentations
-     *               
+     *
      * @throws XNIException if an error occurs. This should be handled by implementations of {@link org.apache.xerces.xni.XMLDocumentHandler}
      */
-    public void ignorableWhitespace(XMLString text, Augmentations augs) throws XNIException;
-
+    func ignorableWhitespace(_ text : XMLString, _ augs : Augmentations) throws (XNIException)
+    
     /**
      * The end of an element.
-     * 
+     *
      * @param element The name of the element.
      * @param augs    Additional information that may include infoset augmentations
-     *                
+     *
      * @throws XNIException if an error occurs. This should be handled by implementations of {@link org.apache.xerces.xni.XMLDocumentHandler}
      */
-    public void endElement(QName element, Augmentations augs) throws XNIException;
-
+    func endElement(_ element : QName, _ augs : Augmentations) throws (XNIException)
+    
     /**
      * The start of a CDATA section.
-     * 
+     *
      * @param augs   Additional information that may include infoset augmentations
-     *               
+     *
      * @throws XNIException if an error occurs. This should be handled by implementations of {@link org.apache.xerces.xni.XMLDocumentHandler}
      */
-    public void startCDATA(Augmentations augs) throws XNIException;
-
+    func startCDATA(_ augs : Augmentations) throws (XNIException)
+    
     /**
      * The end of a CDATA section.
-     * 
+     *
      * @param augs   Additional information that may include infoset augmentations
-     *               
+     *
      * @throws XNIException if an error occurs. This should be handled by implementations of {@link org.apache.xerces.xni.XMLDocumentHandler}
      */
-    public void endCDATA(Augmentations augs) throws XNIException;
-
+    func endCDATA(_ augs : Augmentations) throws (XNIException)
+    
     /**
      * The end of the document.
-     * 
+     *
      * @param augs   Additional information that may include infoset augmentations
-     *               
+     *
      * @throws XNIException if an error occurs. This should be handled by implementations of {@link org.apache.xerces.xni.XMLDocumentHandler}
      */
-    public void endDocument(Augmentations augs) throws XNIException;
-
-
+    func endDocument(_ augs : Augmentations) throws (XNIException)
+    
+    
     /**
      * Sets the document source.
      *
      * @param source the document source
      * @see XMLDocumentSource
      */
-    public void setDocumentSource(XMLDocumentSource source);
-
-
+    func setDocumentSource(_ source : org.apache.xerces.xni.parser.XMLDocumentSource)
+    
+    
     /**
      * Returns the document source.
      *
      * @return the document source
      * @see XMLDocumentSource
      */
-    public XMLDocumentSource getDocumentSource();
-
-} // interface XMLDocumentHandler
+    func getDocumentSource() -> org.apache.xerces.xni.parser.XMLDocumentSource
+    
+  } // interface XMLDocumentHandler
+}
