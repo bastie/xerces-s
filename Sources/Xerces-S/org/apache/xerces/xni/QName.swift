@@ -34,7 +34,7 @@ extension org.apache.xerces.xni {
    *
    * @version $Id$
    */
-  public class QName : java.lang.Cloneable, CustomStringConvertible, Equatable, Hashable {
+  open class QName : java.lang.Cloneable, CustomStringConvertible, Equatable, Hashable {
     
     /**
      * The qname's prefix. For example, the prefix for the qname "a:foo" is "a".

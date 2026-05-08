@@ -3,5 +3,5 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 extension org {
-  enum apache {}
+  public enum apache {}
 }

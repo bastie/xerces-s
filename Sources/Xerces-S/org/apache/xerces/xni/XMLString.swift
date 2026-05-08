@@ -42,7 +42,7 @@ extension org.apache.xerces.xni {
    * @author Andy Clark, IBM
    *
    */
-  public class XMLString {
+  open class XMLString {
     
     /** The character array. */
     public var ch : [Character]? = nil

@@ -34,7 +34,6 @@ extension org.apache.xerces.xni {
    */
   public protocol XMLAttributes {
     
-    
     /**
      * Adds an attribute. The attribute's non-normalized value of the
      * attribute will have the same value as the attribute value until
