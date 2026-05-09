@@ -33,13 +33,9 @@ extension org.apache.xerces.xni {
   /// - Authors: Andy Clark, IBM
   ///
   public class XNIException : Error, @unchecked Sendable {
-    
-    // - FIXME: Remove it after porting
-    /// Serialization version.
-    static let serialVersionUID = Int64(9019819772686063775)
-    
+        
     private var exception: Error?
-    private var message: String
+    private var message: String?
     
     ///
     /// Constructs an XNI exception with a wrapped exception.
@@ -48,7 +44,7 @@ extension org.apache.xerces.xni {
     ///   - exception: wrapped error
     ///   - message: error message
     ///
-    public init (_ newException : Error? = nil, _ newMessage : String = "") {
+    public init (_ newException : Error? = nil, _ newMessage : String?) {
       self.exception = newException
       self.message = newMessage
     }
@@ -89,6 +85,10 @@ extension org.apache.xerces.xni {
       return getException();
     }
     
+    
+    public func getMessage() -> String? {
+      return message
+    }
   }
   
 }
