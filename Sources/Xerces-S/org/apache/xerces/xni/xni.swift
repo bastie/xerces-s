@@ -3,5 +3,5 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 extension org.apache.xerces {
-  enum xni {}
+  public enum xni {}
 }

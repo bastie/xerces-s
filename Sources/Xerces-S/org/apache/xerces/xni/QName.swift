@@ -149,7 +149,7 @@ extension org.apache.xerces.xni {
     public func hashCode() -> Int {
       return hashValue // it is magic and returns the Hasher result from hash function
     }
-    func hash (into hasher: inout Hasher) {
+    public func hash (into hasher: inout Hasher) {
       if let uri {
         hasher.combine(uri)
         
@@ -172,7 +172,7 @@ extension org.apache.xerces.xni {
       }
       return self == other
     }
-    static func == (lhs: QName, rhs: QName) -> Bool {
+    public static func == (lhs: QName, rhs: QName) -> Bool {
       if (rhs.uri != nil) {
         return lhs.uri == rhs.uri && lhs.localpart == rhs.localpart;
       }

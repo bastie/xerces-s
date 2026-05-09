@@ -14,7 +14,7 @@ let package = Package(
   dependencies: [
     .package(
       url: "https://github.com/bastie/JavApi4Swift.git",
-      .upToNextMajor(from: "0.29.0")
+      .upToNextMajor(from: "0.30.0")
     )
   ],
   targets: [

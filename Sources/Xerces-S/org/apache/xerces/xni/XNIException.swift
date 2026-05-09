@@ -32,11 +32,14 @@ extension org.apache.xerces.xni {
   ///
   /// - Authors: Andy Clark, IBM
   ///
-  public enum XNIException : Error {
+  public class XNIException : Error, @unchecked Sendable {
     
     // - FIXME: Remove it after porting
     /// Serialization version.
     static let serialVersionUID = Int64(9019819772686063775)
+    
+    private var exception: Error?
+    private var message: String
     
     ///
     /// Constructs an XNI exception with a wrapped exception.
@@ -45,16 +48,16 @@ extension org.apache.xerces.xni {
     ///   - exception: wrapped error
     ///   - message: error message
     ///
-    case XNIException (_ exception : Error? = nil, _ message : String = "")
+    public init (_ newException : Error? = nil, _ newMessage : String = "") {
+      self.exception = newException
+      self.message = newMessage
+    }
     
     ///
     /// - Returns: the wrapped exception.
     ///
     public func getException() -> Error? {
-      switch self {
-      case .XNIException(let exception, _) :
         return exception
-      }
     }
     
     ///
@@ -69,13 +72,16 @@ extension org.apache.xerces.xni {
     /// - Throws: IllegalArgumentException if the cause is this exception
     ///
     public func initCause(_ throwable : java.lang.Throwable) throws -> Error {
-      switch self {
-      case .XNIException(let exception, _) :
-        if exception == nil {
-          throw java.lang.Throwable.IllegalArgumentException()
-        }
+      guard self.exception == nil else {
         throw java.lang.Throwable.IllegalStateException()
       }
+      if Mirror(reflecting: throwable).subjectType == Mirror(reflecting: self).subjectType {
+      // FIXME: if JavApi migrated to typed exceptions use follow check: guard throwable !== self else {
+        throw java.lang.Throwable.IllegalArgumentException()
+      }
+      self.exception = throwable
+      
+      return self
     }
     
     /// - Returns: the cause of this <code>XNIException</code>.
